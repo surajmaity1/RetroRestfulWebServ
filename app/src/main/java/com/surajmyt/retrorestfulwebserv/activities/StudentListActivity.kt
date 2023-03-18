@@ -42,7 +42,7 @@ class StudentListActivity : AppCompatActivity() {
         // To be replaced by retrofit code
 		val studentService = ServiceBuilder.buildService(StudentService::class.java)
 
-		val requestCall = studentService.getStudentList()
+		val requestCall = studentService.getStudentList("CSE")
 
 		requestCall.enqueue(object: Callback<List<Student>> {
 

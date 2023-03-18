@@ -16,8 +16,9 @@ import retrofit2.http.Query
 import retrofit2.http.QueryMap
 
 interface StudentService {
+
     @GET("student")
-    fun getStudentList(): Call<List<Student>>
+    fun getStudentList(@Query("department") department: String?): Call<List<Student>>
 
     @GET("student/{id}")
     fun getStudent(@Path("id") id: Int): Call<Student>
