@@ -37,6 +37,7 @@ interface StudentService {
         @Field("department") department: String
     ): Call<Student>
 
+
     @DELETE("student/{id}")
     fun deleteStudent(@Path("id") id: Int): Call<Unit>
 }

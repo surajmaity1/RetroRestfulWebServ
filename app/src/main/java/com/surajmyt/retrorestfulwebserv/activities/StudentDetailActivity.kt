@@ -118,7 +118,6 @@ class StudentDetailActivity : AppCompatActivity() {
 			val requestCall = studentService.deleteStudent(id)
 
 			requestCall.enqueue(object: Callback<Unit> {
-
 				override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
 					if (response.isSuccessful) {
 						finish()
