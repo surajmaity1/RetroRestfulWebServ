@@ -114,9 +114,25 @@ class StudentDetailActivity : AppCompatActivity() {
 
 		btn_delete.setOnClickListener {
 
-            // To be replaced by retrofit code
-            SampleData.deleteStudent(id)
-            finish() // Move back to StudentListActivity
+			val studentService = ServiceBuilder.buildService(StudentService::class.java)
+			val requestCall = studentService.deleteStudent(id)
+
+			requestCall.enqueue(object: Callback<Unit> {
+
+				override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
+					if (response.isSuccessful) {
+						finish()
+						Toast.makeText(this@StudentDetailActivity, "Student Data Deleted", Toast.LENGTH_SHORT).show()
+					} else {
+						Toast.makeText(this@StudentDetailActivity, "Failed to Delete", Toast.LENGTH_SHORT).show()
+					}
+				}
+
+				override fun onFailure(call: Call<Unit>, t: Throwable) {
+					Toast.makeText(this@StudentDetailActivity, "Failed to Delete", Toast.LENGTH_SHORT).show()
+				}
+			})
+
 		}
 	}
 
