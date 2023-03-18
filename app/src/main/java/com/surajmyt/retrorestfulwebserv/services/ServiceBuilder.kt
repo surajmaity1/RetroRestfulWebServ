@@ -13,7 +13,9 @@ import java.util.Locale
 object ServiceBuilder {
     private const val URL = "http://10.0.2.2:7002/"
 
-    private val okHttp = OkHttpClient.Builder()
+    private val logger = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+
+    private val okHttp = OkHttpClient.Builder().addInterceptor(logger)
 
     private val builder = Retrofit.Builder().baseUrl(URL)
         .addConverterFactory(GsonConverterFactory.create())

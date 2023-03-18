@@ -40,18 +40,16 @@ class StudentListActivity : AppCompatActivity() {
 	private fun loadStudents() {
 
         // To be replaced by retrofit code
-		//student_recycler_view.adapter = StudentAdapter(SampleData.Students)
+		val studentService = ServiceBuilder.buildService(StudentService::class.java)
 
-		val destinationService = ServiceBuilder.buildService(StudentService::class.java)
-
-		val requestCall = destinationService.getStudentList()
+		val requestCall = studentService.getStudentList()
 
 		requestCall.enqueue(object: Callback<List<Student>> {
 
 			override fun onResponse(call: Call<List<Student>>, response: Response<List<Student>>) {
 				if (response.isSuccessful) {
-					val destinationList = response.body()!!
-					student_recycler_view.adapter = StudentAdapter(destinationList)
+					val studentList = response.body()!!
+					student_recycler_view.adapter = StudentAdapter(studentList)
 				} else if(response.code() == 401) {
 					Toast.makeText(this@StudentListActivity,
 						"Session expired. Login again.", Toast.LENGTH_LONG).show()
