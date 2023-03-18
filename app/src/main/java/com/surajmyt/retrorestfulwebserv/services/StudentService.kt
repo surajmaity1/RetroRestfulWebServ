@@ -17,11 +17,9 @@ import retrofit2.http.QueryMap
 
 interface StudentService {
 
-    @Headers("x-device-type: Android", "x-dummy: data")
     @GET("student")
     fun getStudentList(
-        @QueryMap queryHashMap: HashMap<String, String>,
-        @Header("Accept-Language") language: String
+        @QueryMap queryHashMap: HashMap<String, String>
     ): Call<List<Student>>
 
     @GET("student/{id}")

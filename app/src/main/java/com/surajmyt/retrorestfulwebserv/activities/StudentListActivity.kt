@@ -46,7 +46,7 @@ class StudentListActivity : AppCompatActivity() {
 //		queryHashMap["department"] = "EE"
 //		queryHashMap["count"] = "1"
 
-		val requestCall = studentService.getStudentList(queryHashMap, "EN")
+		val requestCall = studentService.getStudentList(queryHashMap)
 
 		requestCall.enqueue(object: Callback<List<Student>> {
 
