@@ -42,7 +42,11 @@ class StudentListActivity : AppCompatActivity() {
         // To be replaced by retrofit code
 		val studentService = ServiceBuilder.buildService(StudentService::class.java)
 
-		val requestCall = studentService.getStudentList("CSE")
+		val queryHashMap = HashMap<String, String>()
+		queryHashMap["department"] = "EE"
+		queryHashMap["count"] = "1"
+
+		val requestCall = studentService.getStudentList(queryHashMap)
 
 		requestCall.enqueue(object: Callback<List<Student>> {
 
