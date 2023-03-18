@@ -17,9 +17,11 @@ import retrofit2.http.QueryMap
 
 interface StudentService {
 
+    @Headers("x-device-type: Android", "x-dummy: data")
     @GET("student")
     fun getStudentList(
-        @QueryMap queryHashMap: HashMap<String, String>
+        @QueryMap queryHashMap: HashMap<String, String>,
+        @Header("Accept-Language") language: String
     ): Call<List<Student>>
 
     @GET("student/{id}")
@@ -37,7 +39,8 @@ interface StudentService {
         @Field("department") department: String
     ): Call<Student>
 
-
     @DELETE("student/{id}")
     fun deleteStudent(@Path("id") id: Int): Call<Unit>
+
+
 }
