@@ -7,9 +7,13 @@ import androidx.appcompat.app.AppCompatActivity
 import com.surajmyt.retrorestfulwebserv.R
 import com.surajmyt.retrorestfulwebserv.helpers.SampleData
 import com.surajmyt.retrorestfulwebserv.models.Student
+import com.surajmyt.retrorestfulwebserv.services.ServiceBuilder
+import com.surajmyt.retrorestfulwebserv.services.StudentService
 import kotlinx.android.synthetic.main.activity_student_detail.*
-
-
+import retrofit2.Call
+import retrofit2.Response
+import android.widget.Toast
+import retrofit2.Callback
 
 class StudentDetailActivity : AppCompatActivity() {
 
@@ -37,16 +41,40 @@ class StudentDetailActivity : AppCompatActivity() {
 
 	private fun loadDetails(id: Int) {
 
-		// To be replaced by retrofit code
-		val student = SampleData.getStudentById(id)
+		val studentService = ServiceBuilder.buildService(StudentService::class.java)
+		val requestCall = studentService.getStudent(id)
 
-		student?.let {
-			et_name.setText(student.name)
-			et_about.setText(student.about)
-			et_department.setText(student.department)
+		requestCall.enqueue(object : Callback<Student> {
 
-			collapsing_toolbar.title = student.name
-		}
+			override fun onResponse(call: Call<Student>, response: Response<Student>) {
+
+				if (response.isSuccessful) {
+					val student = response.body()
+					student?.let {
+						et_name.setText(student.name)
+						et_about.setText(student.about)
+						et_department.setText(student.department)
+
+						collapsing_toolbar.title = student.name
+					}
+				} else {
+					Toast.makeText(
+						this@StudentDetailActivity,
+						"Failed to retrieve details",
+						Toast.LENGTH_SHORT
+					).show()
+				}
+			}
+
+			override fun onFailure(call: Call<Student>, t: Throwable) {
+				Toast.makeText(
+					this@StudentDetailActivity,
+					"Failed to retrieve details $t",
+					Toast.LENGTH_SHORT
+				).show()
+			}
+		})
+
 	}
 
 	private fun initUpdateButton(id: Int) {
