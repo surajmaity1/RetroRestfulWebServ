@@ -26,5 +26,14 @@ interface StudentService {
     fun getStudent(@Path("id") id: Int): Call<Student>
 
     @POST("student")
-    fun addDestination(@Body newStudent: Student): Call<Student>
+    fun addStudent(@Body newStudent: Student): Call<Student>
+
+    @FormUrlEncoded
+    @PUT("student/{id}")
+    fun updateStudent(
+        @Path("id") id: Int,
+        @Field("name") name: String,
+        @Field("about") about: String,
+        @Field("department") department: String
+    ): Call<Student>
 }

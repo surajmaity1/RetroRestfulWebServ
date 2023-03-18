@@ -85,15 +85,28 @@ class StudentDetailActivity : AppCompatActivity() {
 			val about = et_about.text.toString()
 			val department = et_department.text.toString()
 
-            // To be replaced by retrofit code
-            val student = Student()
-            student.id = id
-            student.name = name
-            student.about = about
-            student.department = department
+			val studentService = ServiceBuilder.buildService(StudentService::class.java)
+			val requestCall = studentService.updateStudent(id, name, about, department)
 
-            SampleData.updateStudent(student);
-            finish() // Move back to StudentListActivity
+			requestCall.enqueue(object: Callback<Student> {
+
+				override fun onResponse(call: Call<Student>, response: Response<Student>) {
+					if (response.isSuccessful) {
+						finish()
+						var updatedStudent = response.body()
+						Toast.makeText(this@StudentDetailActivity,
+							"Item Updated Successfully", Toast.LENGTH_SHORT).show()
+					} else {
+						Toast.makeText(this@StudentDetailActivity,
+							"Failed to update item", Toast.LENGTH_SHORT).show()
+					}
+				}
+
+				override fun onFailure(call: Call<Student>, t: Throwable) {
+					Toast.makeText(this@StudentDetailActivity,
+						"Failed to update item", Toast.LENGTH_SHORT).show()
+				}
+			})
 		}
 	}
 

@@ -32,7 +32,7 @@ class StudentCreateActivity : AppCompatActivity() {
 			newStudent.department = et_department.text.toString()
 
 			val studentService = ServiceBuilder.buildService(StudentService::class.java)
-			val requestCall = studentService.addDestination(newStudent)
+			val requestCall = studentService.addStudent(newStudent)
 
 			requestCall.enqueue(object: Callback<Student> {
 
