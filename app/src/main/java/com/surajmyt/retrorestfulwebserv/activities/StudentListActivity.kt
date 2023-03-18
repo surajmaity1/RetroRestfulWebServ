@@ -43,8 +43,8 @@ class StudentListActivity : AppCompatActivity() {
 		val studentService = ServiceBuilder.buildService(StudentService::class.java)
 
 		val queryHashMap = HashMap<String, String>()
-		queryHashMap["department"] = "EE"
-		queryHashMap["count"] = "1"
+//		queryHashMap["department"] = "EE"
+//		queryHashMap["count"] = "1"
 
 		val requestCall = studentService.getStudentList(queryHashMap)
 
@@ -64,7 +64,7 @@ class StudentListActivity : AppCompatActivity() {
 
 			override fun onFailure(call: Call<List<Student>>, t: Throwable) {
 				Toast.makeText(this@StudentListActivity, "Error occurred $t", Toast.LENGTH_LONG).show()
-				Log.i("OnFailure:",t.toString())
+				Log.i("OnFailure: ",t.toString())
 
 			}
 		})

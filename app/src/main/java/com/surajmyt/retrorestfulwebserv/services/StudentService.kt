@@ -24,4 +24,7 @@ interface StudentService {
 
     @GET("student/{id}")
     fun getStudent(@Path("id") id: Int): Call<Student>
+
+    @POST("student")
+    fun addDestination(@Body newStudent: Student): Call<Student>
 }
