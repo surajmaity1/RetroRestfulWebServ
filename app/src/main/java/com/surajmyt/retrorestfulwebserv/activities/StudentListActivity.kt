@@ -48,6 +48,11 @@ class StudentListActivity : AppCompatActivity() {
 
 		val requestCall = studentService.getStudentList(queryHashMap)
 
+		// Note for future ref: Suppose user by mistake pressed a button to download a file
+		// to cancel it we'll use requestCall.cancel().
+
+		// requestCall.cancel()
+
 		requestCall.enqueue(object: Callback<List<Student>> {
 
 			override fun onResponse(call: Call<List<Student>>, response: Response<List<Student>>) {
